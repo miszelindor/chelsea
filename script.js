@@ -198,7 +198,7 @@ document.querySelectorAll('.offer-toggle').forEach(btn => {
     }
 })();
 
-// --- Marquee opinii (nieskończona pętla, bezszwowa) ---
+// --- Marquee opinii (auto-scroll + drag/swipe, bezszwowa pętla) ---
 (function() {
     const track = document.getElementById('reviewsTrack');
     if (!track) return;
@@ -206,43 +206,118 @@ document.querySelectorAll('.offer-toggle').forEach(btn => {
     const originals = Array.from(track.children);
     if (!originals.length) return;
 
-    // 1) Klonujemy zestaw kart dokładnie raz — track ma teraz 2 identyczne zestawy.
-    //    Animacja CSS przesuwa o szerokość 1 zestawu, więc na końcu cyklu klony są
-    //    dokładnie tam, gdzie oryginały były na początku → reset jest niewidoczny.
+    // Klonujemy zestaw kart — track ma 2 identyczne zestawy obok siebie.
     originals.forEach(card => {
         const clone = card.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
         track.appendChild(clone);
     });
 
-    // 2) Mierzymy szerokość 1 zestawu (6 kart × szerokość + margin-right każdej)
+    const SPEED_PX_PER_SEC = 50;
+    let setWidth = 0;
+    let offset = 0;          // bieżąca pozycja translateX (zawsze w zakresie -setWidth..0)
+    let lastTime = 0;
+    let paused = false;
+
+    // Drag state
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartOffset = 0;
+    let dragMoved = false;
+
     function measure() {
-        const setWidth = originals.reduce((sum, c) => {
+        setWidth = originals.reduce((sum, c) => {
             const cs = getComputedStyle(c);
             const m = parseFloat(cs.marginRight) || 0;
             return sum + c.offsetWidth + m;
         }, 0);
+    }
+
+    function normalize() {
+        // utrzymujemy offset w zakresie (-setWidth, 0] — bezszwowo
         if (setWidth <= 0) return;
-
-        const SPEED_PX_PER_SEC = 50;
-        const duration = setWidth / SPEED_PX_PER_SEC;
-        track.style.setProperty('--reviews-distance', setWidth + 'px');
-        track.style.setProperty('--reviews-duration', duration + 's');
+        while (offset <= -setWidth) offset += setWidth;
+        while (offset > 0) offset -= setWidth;
     }
 
-    // Pomiar po pełnym załadowaniu (czcionki, layout)
-    if (document.readyState === 'complete') {
+    function tick(time) {
+        if (!lastTime) lastTime = time;
+        const dt = (time - lastTime) / 1000;
+        lastTime = time;
+
+        if (!paused && !isDragging && setWidth > 0) {
+            offset -= SPEED_PX_PER_SEC * dt;
+            normalize();
+        }
+
+        track.style.transform = 'translateX(' + offset + 'px)';
+        requestAnimationFrame(tick);
+    }
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) paused = true;
+
+    // Pomiar po załadowaniu wszystkich zasobów + start animacji
+    function start() {
         measure();
-    } else {
-        window.addEventListener('load', measure);
+        requestAnimationFrame(tick);
     }
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start);
 
-    // Re-pomiar przy resize (debounced)
+    // Resize: ponowny pomiar
     let resizeTimer;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(measure, 200);
+        resizeTimer = setTimeout(() => {
+            measure();
+            normalize();
+        }, 200);
     });
+
+    // Pauza na hover (klawiatura/focus pauzuje tak samo)
+    const wrapper = track.parentElement;
+    wrapper.addEventListener('mouseenter', () => paused = true);
+    wrapper.addEventListener('mouseleave', () => paused = false);
+    wrapper.addEventListener('focusin',    () => paused = true);
+    wrapper.addEventListener('focusout',   () => paused = false);
+
+    // --- Drag / swipe ---
+    track.addEventListener('pointerdown', e => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        isDragging = true;
+        dragMoved = false;
+        dragStartX = e.clientX;
+        dragStartOffset = offset;
+        track.classList.add('is-dragging');
+        track.setPointerCapture(e.pointerId);
+    });
+
+    track.addEventListener('pointermove', e => {
+        if (!isDragging) return;
+        const dx = e.clientX - dragStartX;
+        if (Math.abs(dx) > 3) dragMoved = true;
+        offset = dragStartOffset + dx;
+        normalize();
+    });
+
+    function endDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        track.classList.remove('is-dragging');
+        try { track.releasePointerCapture(e.pointerId); } catch(_) {}
+    }
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('lostpointercapture', endDrag);
+
+    // Zablokuj kliknięcia w linki/przyciski jeśli był drag (żeby nie wywołać linku przypadkiem)
+    track.addEventListener('click', e => {
+        if (dragMoved) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, true);
 })();
 
 // --- Formularz kontaktowy ---

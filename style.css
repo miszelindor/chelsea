@@ -924,22 +924,25 @@ section {
     mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
 }
 
-/* Pas z kartami — animowany w lewo o szerokość JEDNEGO oryginalnego zestawu */
+/* Pas z kartami — pozycja kontrolowana przez JS (auto-scroll + drag) */
 .reviews-track {
     display: flex;
     width: max-content;
-    animation: reviewsMarquee var(--reviews-duration, 60s) linear infinite;
     will-change: transform;
+    cursor: grab;
+    touch-action: pan-y;
+    user-select: none;
 }
 
-.reviews-marquee:hover .reviews-track,
-.reviews-marquee:focus-within .reviews-track {
-    animation-play-state: paused;
+.reviews-track.is-dragging {
+    cursor: grabbing;
 }
 
-@keyframes reviewsMarquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(calc(-1 * var(--reviews-distance, 50%))); }
+/* Wyłącz przeciąganie obrazków SVG przy drag */
+.reviews-track svg,
+.reviews-track img {
+    -webkit-user-drag: none;
+    pointer-events: none;
 }
 
 /* Karta opinii */
@@ -1402,39 +1405,58 @@ section {
         font-size: 15px;
     }
 
+    /* Karuzela lektorów na mobile — bez stackingu absolute, tylko aktywny slajd zajmuje miejsce */
     .lektor-carousel {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        display: block;
     }
 
+    .lektor-track {
+        position: relative;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .lektor-slide {
+        position: relative;
+        inset: auto;
+        display: none;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        transition: none;
+        padding: 0 56px;     /* miejsce po bokach na strzałki */
+    }
+
+    .lektor-slide.active {
+        display: grid;
+    }
+
+    .lektor-photo {
+        max-width: 260px;
+        margin: 0 auto;
+    }
+
+    .lektor-info {
+        text-align: center;
+    }
+
+    /* Strzałki pływają po bokach, na wysokości zdjęcia */
     .lektor-arrow {
         position: absolute;
-        top: 200px;
+        top: 130px;
         z-index: 2;
         width: 40px;
         height: 40px;
     }
 
     .lektor-arrow-prev {
-        left: 8px;
+        left: 4px;
     }
 
     .lektor-arrow-next {
-        right: 8px;
-    }
-
-    .lektor-track {
-        min-height: 720px;
-    }
-
-    .lektor-slide {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .lektor-photo {
-        max-width: 320px;
-        margin: 0 auto;
+        right: 4px;
     }
 
     .review-card {
