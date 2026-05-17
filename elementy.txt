@@ -1,0 +1,93 @@
+1. Hero z jasnym przekazem wartości + natychmiastowe CTA
+Każda strona otwiera się pełnoekranowym hero z:
+
+Krótki, korzyściowy nagłówek (nie opis usługi, lecz obietnica: „Speak with confidence", „Learn and live the language", „Naucz się angielskiego")
+Podtytuł rozwijający obietnicę (grupa docelowa, metoda)
+1-2 przyciski CTA wyróżnione kolorem — zawsze akcja, nie informacja („Get a quote", „Try for free", „Zapisz się")
+Zdjęcie lub ilustracja osób (uczniowie, lektor) — nigdy stockowe abstrakcje
+2. Liczby i statystyki budujące skalę
+Widoczna sekcja z kluczowymi liczbami, np.:
+
+„96% uczniów poleca" (LSI)
+„6 000+ zadowolonych kursantów" (Prolang)
+„940 000 rodziców nam zaufało" (Novakid)
+„80 lat doświadczenia" (Kaplan)
+„130+ szkół w 45 krajach" (IH)
+Zwykle 3-4 cyfry w rzędzie, duże fonty, ikony — budują wiarygodność na pierwszy rzut oka.
+
+3. Opinie klientów z imieniem, zdjęciem i kontekstem
+Wszystkie analizowane strony mają sekcję testimoniali:
+
+Imię i nazwisko + firma/kraj
+Zdjęcie (okrągły avatar lub kadr z wideo)
+Krótki cytat z konkretnym rezultatem
+Często karuzela z nawigacją strzałkami
+Integracja z Trustpilot / Google Reviews (Lingoda, Kaplan, Novakid)
+4. Segmentacja oferty wg grupy docelowej
+Oferta nigdy nie jest jednym blokiem — jest podzielona na czytelne kategorie:
+
+Wg wieku: dzieci / młodzież / dorośli / 30+ (Kaplan, Novakid, inlingua)
+Wg celu: kursy ogólne / egzaminy / biznes / online (LSI, IH)
+Wg języka: flagi + nazwy (Prolang, inlingua)
+Każda kategoria to karta z ikoną/zdjęciem, krótkim opisem i CTA „Dowiedz się więcej".
+
+5. Proces / metoda nauki krok po kroku
+Przejrzysta wizualizacja ścieżki ucznia:
+
+Numerowane kroki lub timeline (LSI: 6-step journey, Novakid: quiz → plan → lekcja)
+Pokazuje, że szkoła ma system, a nie chaotyczne lekcje
+Buduje zaufanie do metodologii
+Często z ikonami i krótkimi opisami
+6. Sekcja lektorów / zespołu
+Prezentacja kadry z:
+
+Zdjęciem (portret, nie stock)
+Kwalifikacjami (CELTA, native speaker, lata doświadczenia)
+Często wideo-wizytówka lektora (Novakid, LSI)
+Podkreślenie procesu rekrutacji („1 na 11 przechodzi nasz 10-etapowy proces" — Novakid)
+7. Wielokrotne, kontekstowe CTA
+Przyciski CTA nie pojawiają się tylko w hero — są powtarzane co 1-2 sekcje:
+
+Po ofercie: „Sprawdź kursy"
+Po opiniach: „Dołącz do nich"
+Po metodzie: „Umów konsultację"
+W navbarze: stały przycisk kontaktu
+Kaplan ma 4 różne formularze (quote, brochure, contact, newsletter)
+8. Sticky nawigacja + przejrzysta struktura menu
+Wszystkie strony mają:
+
+Przyklejony header (position: sticky/fixed, z-index: 999+)
+Mega-menu z podkategoriami pogrupowanymi logicznie
+Przełącznik języka strony
+Mobilne menu hamburgerowe z pełnoekranowym overlay
+CTA w nawigacji widoczny zawsze
+9. Certyfikaty, akredytacje i gwarancje
+Sekcja trust signals obecna na każdej stronie:
+
+Logo akredytacji: British Council, ACCET, Cambridge, CELTA (Kaplan, LSI, IH)
+Certyfikaty jakości: SUS 3.0 (Prolang)
+Gwarancje: „45-day money-back guarantee" (Novakid), „Guaranteed Progress" (Kaplan)
+Umieszczone w stopce lub dedykowanej sekcji z szarym tłem
+10. Formularz kontaktowy / quiz kwalifikacyjny
+Zamiast (lub obok) tradycyjnego formularza:
+
+Quiz / test poziomujący jako punkt wejścia (Lingoda, Novakid)
+Kalkulator wyceny lub „Get a quote" (Kaplan, LSI, Prolang)
+Formularz z minimalną liczbą pól (imię, email, telefon)
+Pobranie materiału (e-book, broszura) w zamian za dane (Kaplan, Prolang)
+11. Spójna kolorystyka z wyraźnym akcentem
+Schemat kolorów zawsze opiera się na:
+
+Ciemny kolor bazowy (navy, granat, ciemny niebieski) — zaufanie, profesjonalizm
+Jasny akcent na CTA (żółty, złoty, pomarańczowy, magenta) — przyciąga wzrok
+Białe/jasne tła sekcji naprzemiennie — czytelność i rytm
+Kontrast kolorystyczny spełniający WCAG
+12. Responsywność i optymalizacja mobilna
+Bez wyjątku:
+
+Breakpointy na 768px, 1024px, często też 480px i 1440px
+Hamburger menu z overlay
+Skalowane zdjęcia (srcset, WebP, lazy loading)
+Przyciski minimum 48px wysokości (touch-friendly)
+Typografia z clamp() lub skalowaniem procentowym
+100dvh dla sekcji hero
