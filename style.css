@@ -230,20 +230,40 @@ section {
 }
 
 .logo {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1;
     font-family: var(--font-display);
+    color: var(--white);
+    transition: color var(--transition);
+}
+
+.logo-main {
     font-size: 28px;
     font-weight: 700;
-    color: var(--white);
     letter-spacing: -0.5px;
-    transition: color var(--transition);
+}
+
+.logo-dot {
+    color: var(--gold);
+}
+
+.logo-sub {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-top: 4px;
 }
 
 .navbar.scrolled .logo {
     color: var(--navy);
 }
 
-.logo span {
-    color: var(--accent);
+.navbar.scrolled .logo-sub {
+    color: var(--text-muted);
 }
 
 .nav-links {
@@ -377,14 +397,12 @@ section {
     background: rgb(3, 67, 122);
 }
 
-/* Hero background image with parallax */
+/* Hero background image */
 .hero-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
     background: url('img/hero-background.png') center center / cover no-repeat;
-    will-change: transform;
-    transform: scale(1.15);
 }
 
 /* Przyciemnienie tła */
@@ -1187,20 +1205,16 @@ section {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes heroScale {
-    from { opacity: 0; transform: scale(1.5); }
-    to   { opacity: 1; transform: scale(1.15); }
+/* Tlo: odsłonięcie od dołu ku górze (analogicznie do napisów wjeżdżających w górę) */
+@keyframes heroReveal {
+    from { opacity: 0; clip-path: inset(100% 0 0 0); }
+    to   { opacity: 1; clip-path: inset(0 0 0 0); }
 }
 
-@keyframes heroImageUp {
-    from { opacity: 0; transform: translateY(60px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* 1. Tlo — wchodzi pierwsze */
+/* 1. Tlo — wchodzi pierwsze (płynne odsłonięcie, bez przybliżania) */
 .hero-bg {
     opacity: 0;
-    animation: heroScale 1s cubic-bezier(0.22, 1, 0.36, 1) 0s forwards;
+    animation: heroReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0s forwards;
 }
 
 /* 3. Glowny napis */
@@ -1474,10 +1488,6 @@ section {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
-    }
-
-    .hero-bg {
-        transform: scale(1.15) !important;
     }
 
     .reveal {

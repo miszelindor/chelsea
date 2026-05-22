@@ -67,60 +67,6 @@ function updateActiveLink() {
 }
 window.addEventListener('scroll', updateActiveLink, { passive: true });
 
-// --- Parallax Hero Background (mouse-follow) ---
-(function() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const hero   = document.getElementById('hero');
-    const heroBg = document.getElementById('hero-bg');
-
-    const maxShift    = 30;
-    const easingFactor = 0.05;
-    let parallaxReady = false;
-
-    let targetX = 0, targetY = 0;
-    let currentX = 0, currentY = 0;
-
-    // Wait for entrance animation to finish before enabling parallax
-    heroBg.addEventListener('animationend', () => {
-        heroBg.style.animation = 'none';
-        heroBg.style.opacity = '1';
-        heroBg.style.transform = 'scale(1.15)';
-        parallaxReady = true;
-    });
-
-    function updateMouse(cx, cy) {
-        const rect = hero.getBoundingClientRect();
-        const nx = ((cx - rect.left) / rect.width  - 0.5) * 2;
-        const ny = ((cy - rect.top)  / rect.height - 0.5) * 2;
-        const len = Math.sqrt(nx * nx + ny * ny) || 1;
-        const clamp = Math.min(len, 1);
-        targetX = (nx / len) * clamp * maxShift;
-        targetY = (ny / len) * clamp * maxShift;
-    }
-
-    hero.addEventListener('mousemove', e => updateMouse(e.clientX, e.clientY));
-    hero.addEventListener('mouseleave', () => { targetX = 0; targetY = 0; });
-
-    hero.addEventListener('touchmove', e => {
-        updateMouse(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true });
-    hero.addEventListener('touchend', () => { targetX = 0; targetY = 0; });
-
-    function tick() {
-        if (parallaxReady) {
-            currentX += (targetX - currentX) * easingFactor;
-            currentY += (targetY - currentY) * easingFactor;
-
-            heroBg.style.transform =
-                `scale(1.15) translate3d(${(-currentX).toFixed(2)}px, ${(-currentY).toFixed(2)}px, 0)`;
-        }
-
-        requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-})();
-
 // --- Rozwijane oferty ---
 document.querySelectorAll('.offer-toggle').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -320,20 +266,45 @@ document.querySelectorAll('.offer-toggle').forEach(btn => {
     }, true);
 })();
 
-// --- Formularz kontaktowy ---
-function handleSubmit(e) {
+// --- Formularz kontaktowy (Web3Forms) ---
+async function handleSubmit(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
     const originalHTML = btn.innerHTML;
-    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Wyslano!';
-    btn.style.background = '#22c55e';
+    const originalBg = btn.style.background;
+
+    // Stan: wysyłanie
+    btn.innerHTML = 'Wysyłanie...';
     btn.disabled = true;
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: new FormData(form)
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // Sukces
+            btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Wysłano!';
+            btn.style.background = '#22c55e';
+            form.reset();
+        } else {
+            throw new Error(data.message || 'Błąd wysyłki');
+        }
+    } catch (err) {
+        // Błąd
+        btn.innerHTML = 'Spróbuj ponownie';
+        btn.style.background = '#ef4444';
+        console.error('Błąd formularza:', err);
+    }
 
     setTimeout(() => {
         btn.innerHTML = originalHTML;
-        btn.style.background = '';
+        btn.style.background = originalBg;
         btn.disabled = false;
-        e.target.reset();
     }, 3000);
 }
 
