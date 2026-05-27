@@ -400,9 +400,11 @@ section {
 /* Hero background image */
 .hero-bg {
     position: absolute;
-    inset: 0;
+    inset: -20px;
     z-index: 0;
     background: url('img/hero-background.png') center center / cover no-repeat;
+    filter: blur(3px);
+    transform: scale(1.06);
 }
 
 /* Przyciemnienie tła */
