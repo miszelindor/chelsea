@@ -308,3 +308,77 @@ async function handleSubmit(e) {
     }, 3000);
 }
 
+// --- Baner cookies + warunkowe ładowanie Google Analytics ---
+(function() {
+    const GA_ID = 'G-HH5B9X9J20';
+    const STORAGE_KEY = 'cookie-consent';
+    const banner = document.getElementById('cookieBanner');
+
+    function loadGA() {
+        if (window.gaLoaded) return;
+        window.gaLoaded = true;
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function() { dataLayer.push(arguments); };
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+    }
+
+    const consent = localStorage.getItem(STORAGE_KEY);
+    if (consent === 'accepted') {
+        loadGA();
+    } else if (consent !== 'rejected' && banner) {
+        banner.classList.add('visible');
+    }
+
+    if (!banner) return;
+    const accept = document.getElementById('cookieAccept');
+    const reject = document.getElementById('cookieReject');
+
+    accept && accept.addEventListener('click', () => {
+        localStorage.setItem(STORAGE_KEY, 'accepted');
+        banner.classList.remove('visible');
+        loadGA();
+    });
+    reject && reject.addEventListener('click', () => {
+        localStorage.setItem(STORAGE_KEY, 'rejected');
+        banner.classList.remove('visible');
+    });
+})();
+
+// --- Modal polityki prywatności ---
+(function() {
+    const modal = document.getElementById('privacyModal');
+    if (!modal) return;
+
+    const openers = document.querySelectorAll('[data-open-privacy]');
+    const closers = modal.querySelectorAll('[data-close]');
+    let lastFocused = null;
+
+    function open(e) {
+        if (e) e.preventDefault();
+        lastFocused = document.activeElement;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        const closeBtn = modal.querySelector('.modal-close');
+        if (closeBtn) closeBtn.focus();
+    }
+
+    function close() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (lastFocused) lastFocused.focus();
+    }
+
+    openers.forEach(el => el.addEventListener('click', open));
+    closers.forEach(el => el.addEventListener('click', close));
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) close();
+    });
+})();
+

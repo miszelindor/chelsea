@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HH5B9X9J20">
-    </script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-HH5B9X9J20');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
     <meta name="description" content="Chelsea — Szkoła Językowa. Kursy angielskiego dla dzieci, młodzieży, dorosłych i firm. Zajęcia indywidualne i grupowe w Szamotułach i online.">
     <title>Chelsea — Szkoła Językowa | Angielski dla każdego</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -158,7 +150,7 @@
                     </div>
                 </article>
 
-                <article class="offer-feature reveal" style="background-image: url('img/przygotowanie-do-egzaminów.jpg');">
+                <article class="offer-feature reveal" style="background-image: url('img/przygotowanie-do-egzaminow.jpg');">
                     <div class="container">
                         <div class="offer-feature-content">
                             <h3>Przygotowanie do egzaminów</h3>
@@ -485,10 +477,104 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; 2025 Chelsea — Szkoła Językowa. Wszelkie prawa zastrzeżone. · <a href="#">Polityka prywatności</a>
+                &copy; 2026 Chelsea — Szkoła Językowa. Wszelkie prawa zastrzeżone. · <a href="#" data-open-privacy>Polityka prywatności</a>
             </div>
         </div>
     </footer>
+
+    <!-- ============================================
+         BANER COOKIES
+         ============================================ -->
+    <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Zgoda na pliki cookies">
+        <p class="cookie-text">Używamy plików cookies do analizy ruchu, aby ulepszać działanie strony. Możesz to zaakceptować lub odrzucić. Szczegóły znajdziesz w <a href="#" data-open-privacy>polityce prywatności</a>.</p>
+        <div class="cookie-actions">
+            <button class="cookie-btn cookie-btn-reject" id="cookieReject" type="button">Odrzuć</button>
+            <button class="cookie-btn cookie-btn-accept" id="cookieAccept" type="button">Akceptuję</button>
+        </div>
+    </div>
+
+    <!-- ============================================
+         MODAL — POLITYKA PRYWATNOŚCI
+         ============================================ -->
+    <div class="modal" id="privacyModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+        <div class="modal-overlay" data-close></div>
+        <div class="modal-box" role="document">
+            <button class="modal-close" type="button" data-close aria-label="Zamknij">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="legal-content">
+                <h2 class="modal-title" id="privacyTitle">Polityka prywatności</h2>
+                <p class="legal-updated">Ostatnia aktualizacja: 29 maja 2026 r.</p>
+
+                <p>Niniejsza polityka prywatności opisuje zasady przetwarzania danych osobowych użytkowników serwisu szkoły językowej Chelsea oraz wykorzystywania plików cookies. Dokument jest zgodny z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. (RODO).</p>
+
+                <h3>1. Administrator danych osobowych</h3>
+                <p>Administratorem Twoich danych osobowych jest Katarzyna Serba, prowadząca szkołę językową Chelsea, ul. Aroniowa 18, 64-500 Kępa.</p>
+                <p>Kontakt w sprawach dotyczących danych osobowych:</p>
+                <ul>
+                    <li>e-mail: <a href="mailto:katarzyna.serba@op.pl">katarzyna.serba@op.pl</a></li>
+                    <li>telefon: <a href="tel:+48608578954">+48 608 578 954</a></li>
+                </ul>
+
+                <h3>2. Jakie dane zbieramy</h3>
+                <p>Za pośrednictwem formularza zgłoszeniowego dostępnego w serwisie zbieramy następujące dane:</p>
+                <ul>
+                    <li>imię i nazwisko,</li>
+                    <li>adres e-mail,</li>
+                    <li>numer telefonu (opcjonalnie),</li>
+                    <li>nazwę firmy (opcjonalnie),</li>
+                    <li>treść wiadomości przekazanej w formularzu.</li>
+                </ul>
+                <p>Dodatkowo podczas korzystania z serwisu automatycznie zbierane są dane o aktywności (m.in. adres IP, typ przeglądarki, sposób korzystania ze strony) za pośrednictwem narzędzi analitycznych — zob. punkt 6.</p>
+
+                <h3>3. Cele i podstawy prawne przetwarzania</h3>
+                <ul>
+                    <li>Udzielenie odpowiedzi na zapytanie oraz kontakt w sprawie oferty kursów — na podstawie podjęcia działań na żądanie osoby przed zawarciem umowy oraz prawnie uzasadnionego interesu administratora (art. 6 ust. 1 lit. b oraz lit. f RODO).</li>
+                    <li>Analiza ruchu w serwisie i jego ulepszanie — na podstawie zgody wyrażonej poprzez ustawienia przeglądarki lub korzystanie z serwisu (art. 6 ust. 1 lit. a RODO).</li>
+                    <li>Ewentualne ustalenie, dochodzenie lub obrona przed roszczeniami — na podstawie prawnie uzasadnionego interesu administratora (art. 6 ust. 1 lit. f RODO).</li>
+                </ul>
+
+                <h3>4. Odbiorcy danych</h3>
+                <p>Twoje dane mogą być przekazywane podmiotom, które wspierają nas w prowadzeniu serwisu i obsłudze zapytań:</p>
+                <ul>
+                    <li>dostawcy usługi obsługi formularza kontaktowego (Web3Forms),</li>
+                    <li>dostawcy narzędzi analitycznych (Google Analytics — Google Ireland Limited),</li>
+                    <li>dostawca hostingu serwisu.</li>
+                </ul>
+                <p>Część usług dostarczana jest przez podmioty, które mogą przetwarzać dane poza Europejskim Obszarem Gospodarczym. W takim przypadku przekazanie odbywa się w oparciu o standardowe klauzule umowne zatwierdzone przez Komisję Europejską.</p>
+
+                <h3>5. Okres przechowywania danych</h3>
+                <p>Dane przekazane w formularzu przechowujemy przez czas niezbędny do obsługi zapytania, a następnie przez okres wynikający z przepisów prawa lub do czasu przedawnienia ewentualnych roszczeń. Dane przetwarzane na podstawie zgody przechowujemy do momentu jej wycofania.</p>
+
+                <h3>6. Pliki cookies i Google Analytics</h3>
+                <p>Serwis wykorzystuje pliki cookies — niewielkie pliki tekstowe zapisywane na urządzeniu użytkownika. Stosujemy:</p>
+                <ul>
+                    <li>cookies niezbędne do prawidłowego działania strony,</li>
+                    <li>cookies analityczne Google Analytics, które pozwalają nam zrozumieć, w jaki sposób użytkownicy korzystają z serwisu.</li>
+                </ul>
+                <p>Możesz w każdej chwili zmienić ustawienia dotyczące plików cookies w swojej przeglądarce, w tym zablokować ich zapisywanie. Ograniczenie stosowania cookies może wpłynąć na niektóre funkcje serwisu.</p>
+
+                <h3>7. Twoje prawa</h3>
+                <p>W związku z przetwarzaniem danych osobowych przysługują Ci następujące prawa:</p>
+                <ul>
+                    <li>prawo dostępu do danych oraz uzyskania ich kopii,</li>
+                    <li>prawo do sprostowania (poprawiania) danych,</li>
+                    <li>prawo do usunięcia danych,</li>
+                    <li>prawo do ograniczenia przetwarzania,</li>
+                    <li>prawo do przenoszenia danych,</li>
+                    <li>prawo do wniesienia sprzeciwu wobec przetwarzania,</li>
+                    <li>prawo do cofnięcia zgody w dowolnym momencie (bez wpływu na zgodność z prawem przetwarzania dokonanego przed jej cofnięciem).</li>
+                </ul>
+                <p>W celu realizacji powyższych praw skontaktuj się z administratorem pod adresem <a href="mailto:katarzyna.serba@op.pl">katarzyna.serba@op.pl</a>.</p>
+
+                <h3>8. Dobrowolność podania danych</h3>
+                <p>Podanie danych w formularzu jest dobrowolne, jednak niezbędne do udzielenia odpowiedzi na zapytanie i przedstawienia oferty. Niepodanie danych uniemożliwi kontakt zwrotny.</p>
+
+                <h3>9. Zmiany polityki prywatności</h3>
+                <p>Zastrzegamy sobie prawo do wprowadzania zmian w niniejszej polityce prywatności. Aktualna wersja dokumentu jest zawsze dostępna w tym miejscu.</p>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 
