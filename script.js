@@ -1,7 +1,8 @@
 // --- Nawigacja: zmiana tla po scrollu ---
 const navbar = document.getElementById('navbar');
+const hasHero = !!document.querySelector('.hero');
 function updateNavbar() {
-    if (window.scrollY > 60) {
+    if (!hasHero || window.scrollY > 60) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
